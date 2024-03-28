@@ -135,7 +135,18 @@ public class Main {
             } else if (choose == 5) {
                 Info.profile(user);
             } else if (choose == 6) {
-
+                Scanner input1 = new Scanner(System.in);
+                System.out.println("What do you want to do?\n1.change Email\t2.change Password\t3.change name");
+                int change = input1.nextInt();
+                if (change == 1){
+                    Info.changeEmail(user);
+                } else if (change == 2) {
+                    Info.changePass(user);
+                } else if (change == 3) {
+                    Info.changeName(user);
+                } else {
+                    System.out.println("You entered a wrong number!\n");
+                }
             } else if (choose == 7) {
                 break;
             } else {

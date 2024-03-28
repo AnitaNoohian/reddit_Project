@@ -8,7 +8,7 @@ public class Posts implements PostManagement{
     private Subreddit subreddit;
     private Account user;
     private UUID ID;
-    private HashMap<String, String> comments;
+    public HashMap<String, String> comments;
 
     public Posts(String title, String text, Subreddit subreddit, Account user){
         this.title = title;
@@ -51,5 +51,6 @@ public class Posts implements PostManagement{
     public void addComment(String comment, Account user){
         comments.put(user.getID(),comment);
     }
+
 
 }

@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +8,7 @@ public class Info {
     public static HashMap<String,Account> users;
     public static List<Subreddit> subreddits;
     public static List<Account> emails;
+    public static List<Posts> posts;
 
     public static boolean checkEmail(String email){
         String regex = "(([^@#^&*~`()={}'\";:<>?]|(\".*\")){1,64})@(([^@_]+)|(\\[.+\\]))";
@@ -74,5 +76,29 @@ public class Info {
             System.out.println(user.postsData().get(i).getText());
         }
     }
-
+    public static void changeEmail(Account user){
+        System.out.println("Your Email is : " + user.getEmail());
+        System.out.println("Enter your new Email :");
+        Scanner input = new Scanner(System.in);
+        String newEmail = input.nextLine();
+        if (checkEmail(newEmail)) {
+            user.setEmail(newEmail);
+        } else {
+            System.out.println("Invalid Email address!");
+        }
+    }
+    public static void changeName(Account user){
+        System.out.println("Your Name is : " + user.getName());
+        System.out.println("Enter your new Name :");
+        Scanner input = new Scanner(System.in);
+        String newName = input.nextLine();
+        user.setName(newName);
+    }
+    public static void changePass(Account user){
+            System.out.println("Your Password is : " + user.getPassword());
+        System.out.println("Enter your new Password :");
+        Scanner input = new Scanner(System.in);
+        String newPass = input.nextLine();
+        user.setName(newPass);
+    }
 }
