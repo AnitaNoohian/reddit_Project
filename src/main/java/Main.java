@@ -58,7 +58,7 @@ public class Main {
                                     if (email.equals(Info.emails.get(i).getEmail())) {
                                         if (pass.equals(Info.emails.get(i).getPassword())) {
                                             System.out.println("Correct password!\n");
-                                        //    menu(Info.emails.get(i));
+                                            menu(Info.emails.get(i));
                                             break login;
                                         } else {
                                             System.out.println("You entered a wrong password!\n");
@@ -85,7 +85,7 @@ public class Main {
                                     if (username.equals(Info.users.get(key).getID())) {
                                         if (pass.equals(Info.users.get(key).getPassword())) {
                                             System.out.println("Correct password!\n");
-                                           // menu(Info.users.get(key));
+                                            menu(Info.users.get(key));
                                             break login;
                                         } else {
                                             System.out.println("You entered a wrong password!\n");
@@ -108,6 +108,40 @@ public class Main {
             }
         }
     }
+    public static void menu(Account user){
+        while (true) {
+            Scanner input = new Scanner(System.in);
+            System.out.println("What do you want to do?\n1.Timeline\t2.Search\t3.create a Post\t4.create a Subreddit\t5.Profile\t6.Setting\t7.log out");
+            int choose = input.nextInt();
+            if (choose == 1) {
 
+            } else if (choose == 2) {
+
+            } else if (choose == 3) {
+                Scanner input1 = new Scanner(System.in);
+                System.out.println("Select the subreddit you want to post from: ");
+                System.out.println("0)Posting with my account not from a subreddit");
+                for (int i = 0; i < Info.subreddits.size(); i++){
+                    System.out.println((i+1) + ")" + Info.subreddits.get(i).getName());
+                }
+                int sub = input1.nextInt();
+                if (sub == 0) {
+                    user.createPost(user);
+                } else {
+                    user.createPost(user,Info.subreddits.get(sub));
+                }
+            } else if (choose == 4) {
+                user.createSubreddit(user);
+            } else if (choose == 5) {
+                Info.profile(user);
+            } else if (choose == 6) {
+
+            } else if (choose == 7) {
+                break;
+            } else {
+                System.out.println("You entered a wrong number!\n");
+            }
+        }
+    }
 
 }
