@@ -1,5 +1,5 @@
 public class Admin extends Subreddit{
-    public Admin(String name, String host) {
+    public Admin(String name, Account host) {
         super(name, host);
     }
     public void addAdmin(Account user){

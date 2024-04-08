@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -5,20 +6,21 @@ import java.util.UUID;
 public class Subreddit {
     private int numOfMembers;
     private String name;
-    private String host;
+    private Account host;
     protected List<Account> admins;
-    protected HashMap<UUID, Posts> posts;
+    protected List<Posts> posts;
 
-    public Subreddit(String name, String host){
+    public Subreddit(String name, Account host){
         numOfMembers = 0;
         this.name = name;
         this.host = host;
+        posts = new ArrayList<>();
     }
 
     public String getName(){
         return name;
     }
-    public String getHost(){
+    public Account getHost(){
         return host;
     }
     public int getNumOfMembers(){
@@ -26,5 +28,11 @@ public class Subreddit {
     }
     public void addMembers(){
         numOfMembers++;
+    }
+    public List<Posts> getPosts(){
+        return posts;
+    }
+    public void addPost(Posts post){
+        posts.add(post);
     }
 }

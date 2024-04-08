@@ -1,14 +1,16 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class Posts implements PostManagement{
+    private int vote;
     private String title;
     private String text;
     private Subreddit subreddit;
     private Account user;
     private UUID ID;
-    public HashMap<String, String> comments;
+    public List<Comment> comments;
 
     public Posts(String title, String text, Subreddit subreddit, Account user){
         this.title = title;
@@ -16,6 +18,7 @@ public class Posts implements PostManagement{
         ID = UUID.randomUUID();
         this.subreddit = subreddit;
         this.user = user;
+        comments = new ArrayList<>();
     }
     public Posts(String title, String text, Account user){
         this.title = title;
@@ -37,7 +40,7 @@ public class Posts implements PostManagement{
         return text;
     }
     public String getUserName(){
-        return user.getName();
+        return user.getID();
     }
     public Account getUser(){
         return user;
@@ -48,9 +51,17 @@ public class Posts implements PostManagement{
     public UUID getID(){
         return ID;
     }
-    public void addComment(String comment, Account user){
-        comments.put(user.getID(),comment);
+    public void addComment(Comment comment){
+        comments.add(comment);
     }
 
-
+    public void upVote(){
+        vote++;
+    }
+    public void downVote(){
+        vote--;
+    }
+    public int getVote(){
+        return vote;
+    }
 }
