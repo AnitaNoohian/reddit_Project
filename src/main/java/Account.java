@@ -73,7 +73,7 @@ public class Account implements AccountManagement{
         }
     }
     public boolean checkEmail(String email){
-        String regex = "(([^@#^&*~`()={}'\";:<>?]|(\".*\")){1,64})@(([^@_]+)|(\\[.+\\]))";
+        String regex = "(([^@#^&*~`()={}'\";:<>?]|(\".*\")){1,64})@(([^@_]+\\..+)|(\\[.+\\]))";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);

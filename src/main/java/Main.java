@@ -8,36 +8,66 @@ public class Main {
     }
     public static void enterWeb() {
         Scanner input = new Scanner(System.in);
-        System.out.println("\nHello Dear**\nwelcome to Reddit.");
+        System.out.println("\n\t\t\tHello Dear**\n\t\t  welcome to Reddit.\n");
         while (true) {
             System.out.println("Do you have an account?\n1.yes(log in)\t2.No(sign up)\t3.Exit\n");
             int enter = input.nextInt();
             if (enter == 2) {
                 signup :
                 while (true) {
+                    System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
                     Scanner input1 = new Scanner(System.in);
                     System.out.println("Email:");
                     String email = input1.nextLine();
+                    if (email.equals("BACK") || email.equals("back")){
+                        break;
+                    }
                     if (Info.checkEmail(email)) {
                         if (!(Info.findEmail(email))) {
-                            System.out.println("Password:");
-                            String pass = input.next();
-                            System.out.println("Enter a name for your reddit account:");
-                            String name = input1.nextLine();
-                            System.out.println("set a username for your reddit account(you can't change it again!):");
                             while (true) {
-                                String username = input1.nextLine();
-                                Account account = new Account(name,pass,email);
-                                if (account.setID(username)) {
-                                    Info.users.add(account);
+                                System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
+                                System.out.println("Password(at least 8 characters):");
+                                String pass = input.next();
+                                if (pass.equals("BACK") || pass.equals("back")) {
                                     break signup;
+                                }
+                                if (Info.checkPass(pass)) {
+                                    while (true) {
+                                        System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
+                                        System.out.println("Enter a name for your reddit account:");
+                                        String name = input1.nextLine();
+                                        if (name.equals("BACK") || name.equals("back")) {
+                                            break signup;
+                                        }
+                                        if (!name.equals("")) {
+                                            while (true) {
+                                                System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
+                                                System.out.println("set a username for your reddit account(you can't change it again!):");
+                                                String username = input1.nextLine();
+                                                if (username.equals("BACK") || username.equals("back")) {
+                                                    break signup;
+                                                }
+                                                if (Info.checkID(username)) {
+                                                    Account account = new Account(name, pass, email);
+                                                    if (account.setID(username)) {
+                                                        Info.users.add(account);
+                                                        break signup;
+                                                    }
+                                                } else {
+                                                    System.out.println("Invalid Username!");
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("Invalid Password!");
                                 }
                             }
                         } else {
-                            System.out.println("This email has already been used!\n");
+                            System.out.println("This email has already been used!");
                         }
                     } else {
-                        System.out.println("Invalid email!\n");
+                        System.out.println("Invalid email!");
                     }
                 }
             } else if (enter == 1) {

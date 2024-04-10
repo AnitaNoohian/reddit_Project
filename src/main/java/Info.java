@@ -1,16 +1,55 @@
+import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Info {
+public class Info implements Serializable {
 //    public static HashMap<String,Account> users;
     public static List<Subreddit> subreddits = new ArrayList<>();
     public static List<Account> users = new ArrayList<>();
     public static List<Posts> posts = new ArrayList<>();
 
+    public static boolean checkID(String ID) {
+        String regex1 = "[\\S]{4,}";
+        String regex2 = ".*[a-z|A-Z]+.*";
 
+        Pattern pattern1 = Pattern.compile(regex1);
+        Matcher matcher1 = pattern1.matcher(ID);
+        Pattern pattern2 = Pattern.compile(regex2);
+        Matcher matcher2 = pattern2.matcher(ID);
+
+        if (matcher1.find() && matcher2.find()) {
+                if (matcher1.group().equals(ID)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    public static boolean checkPass(String pass){
+        String regex = "[\\S]{8,}";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(pass);
+
+        if (matcher.find()) {
+            if (matcher.group().equals(pass)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
     public static boolean checkEmail(String email){
-        String regex = "(([^@#^&*~`()={}'\";:<>?]|(\".*\")){1,64})@(([^@_]+)|(\\[.+\\]))";
+        String regex = "(([^@#^&*~`()={}'\";:<>?]|(\".*\")){1,64})@(([^@_]+\\..+)|(\\[.+\\]))";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
