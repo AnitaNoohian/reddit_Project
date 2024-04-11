@@ -19,7 +19,7 @@ public class Main {
                     Scanner input1 = new Scanner(System.in);
                     System.out.println("Email:");
                     String email = input1.nextLine();
-                    if (email.equals("BACK") || email.equals("back")){
+                    if (email.equals("BACK") || email.equals("back") || email.equals("Back")){
                         break;
                     }
                     if (Info.checkEmail(email)) {
@@ -28,7 +28,7 @@ public class Main {
                                 System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
                                 System.out.println("Password(at least 8 characters):");
                                 String pass = input.next();
-                                if (pass.equals("BACK") || pass.equals("back")) {
+                                if (pass.equals("BACK") || pass.equals("back") || pass.equals("Back")) {
                                     break signup;
                                 }
                                 if (Info.checkPass(pass)) {
@@ -36,15 +36,16 @@ public class Main {
                                         System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
                                         System.out.println("Enter a name for your reddit account:");
                                         String name = input1.nextLine();
-                                        if (name.equals("BACK") || name.equals("back")) {
+                                        if (name.equals("BACK") || name.equals("back") || name.equals("Back")) {
                                             break signup;
                                         }
-                                        if (!name.equals("")) {
+                                        if (!name.isEmpty()) {
                                             while (true) {
                                                 System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
-                                                System.out.println("set a username for your reddit account(you can't change it again!):");
+                                                System.out.println("set a username for your reddit account(you can't change it again!):" +
+                                                        "\n[at least 4 character & have at least one letter]");
                                                 String username = input1.nextLine();
-                                                if (username.equals("BACK") || username.equals("back")) {
+                                                if (username.equals("BACK") || username.equals("back") || username.equals("Back")) {
                                                     break signup;
                                                 }
                                                 if (Info.checkID(username)) {
@@ -71,65 +72,76 @@ public class Main {
                     }
                 }
             } else if (enter == 1) {
-                Scanner input1 = new Scanner(System.in);
-                System.out.println("How do you want to enter reddit?\n1.With Email\t2.With Username");
-                int way = input1.nextInt();
-                if (way == 1){
-                    login :
-                    while (true) {
-                        Scanner input2 = new Scanner(System.in);
-                        System.out.println("Email:");
-                        String email = input2.nextLine();
-                        if (Info.findEmail(email)) {
-                            while (true) {
-                                System.out.println("Password:");
-                                String pass = input2.nextLine();
-                                for (int i = 0; i < Info.users.size(); i++) {
-                                    if (email.equals(Info.users.get(i).getEmail())) {
-                                        if (pass.equals(Info.users.get(i).getPassword())) {
-                                            System.out.println("Correct password!\n");
-                                            menu(Info.users.get(i));
-                                            break login;
-                                        } else {
-                                            System.out.println("You entered a wrong password!\n");
-                                            break;
+                login:
+                while (true) {
+                    Scanner input1 = new Scanner(System.in);
+                    System.out.println("How do you want to enter reddit?\n1.With Email   2.With Username   3.Back");
+                    int way = input1.nextInt();
+                    if (way == 1) {
+                        while (true) {
+                            Scanner input2 = new Scanner(System.in);
+                            System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
+                            System.out.println("Email:");
+                            String email = input2.nextLine();
+                            if (email.equals("BACK") || email.equals("back") || email.equals("Back")) {
+                                break;
+                            }
+                            if (Info.findEmail(email)) {
+                                while (true) {
+                                    System.out.println("Password:");
+                                    String pass = input2.nextLine();
+                                    for (int i = 0; i < Info.users.size(); i++) {
+                                        if (email.equals(Info.users.get(i).getEmail())) {
+                                            if (Info.users.get(i).checkPassword(pass)) {
+                                                System.out.println("Correct password!\n");
+                                                menu(Info.users.get(i));
+                                                break login;
+                                            } else {
+                                                System.out.println("You entered a wrong password!\n");
+                                                break;
+                                            }
                                         }
                                     }
                                 }
+                            } else {
+                                System.out.println("No registration has been made with this email!\n");
                             }
-                        } else {
-                            System.out.println("No registration has been made with this email!\n");
                         }
-                    }
-                } else if (way == 2){
-                    login :
-                    while (true) {
-                        Scanner input2 = new Scanner(System.in);
-                        System.out.println("Username:");
-                        String username = input2.nextLine();
-                        if (Info.findUser(username)) {
-                            while (true) {
-                                System.out.println("Password:");
-                                String pass = input2.nextLine();
-                                for (int i= 0; i < Info.users.size(); i++) {
-                                    if (username.equals(Info.users.get(i).getID())) {
-                                        if (pass.equals(Info.users.get(i).getPassword())) {
-                                            System.out.println("Correct password!\n");
-                                            menu(Info.users.get(i));
-                                            break login;
-                                        } else {
-                                            System.out.println("You entered a wrong password!\n");
-                                            break;
+                    } else if (way == 2) {
+                        while (true) {
+                            Scanner input2 = new Scanner(System.in);
+                            System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
+                            System.out.println("Username:");
+                            String username = input2.nextLine();
+                            if (username.equals("BACK") || username.equals("back") || username.equals("Back")) {
+                                break;
+                            }
+                            if (Info.findUser(username)) {
+                                while (true) {
+                                    System.out.println("Password:");
+                                    String pass = input2.nextLine();
+                                    for (int i = 0; i < Info.users.size(); i++) {
+                                        if (username.equals(Info.users.get(i).getID())) {
+                                            if (Info.users.get(i).checkPassword(pass)) {
+                                                System.out.println("Correct password!\n");
+                                                menu(Info.users.get(i));
+                                                break login;
+                                            } else {
+                                                System.out.println("You entered a wrong password!\n");
+                                                break;
+                                            }
                                         }
                                     }
                                 }
+                            } else {
+                                System.out.println("No registration has been made with this username!\n");
                             }
-                        } else {
-                            System.out.println("No registration has been made with this username!\n");
                         }
+                    } else if (way == 3) {
+                        break;
+                    } else {
+                        System.out.println("You entered a wrong number!\n");
                     }
-                } else {
-                    System.out.println("You entered a wrong number!\n");
                 }
             } else if (enter == 3){
                 break;
@@ -175,47 +187,59 @@ public class Main {
                 Info.search(search);
             } else if (choose == 3) {
                 Scanner input1 = new Scanner(System.in);
+                System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
                 System.out.println("Select the subreddit you want to post from: ");
                 System.out.println("0)Posting with my account not from a subreddit");
                 for (int i = 0; i < user.getMySubreddits().size(); i++){
                     System.out.println((i+1) + ")" + user.getMySubreddits().get(i).getName());
                 }
-                int sub = input1.nextInt();
-                if (sub == 0) {
+                String sub = input1.next();
+                if (sub.equals("BACK") || sub.equals("back") || sub.equals("Back")){
+
+                } else if (sub.equals("0")) {
                     user.createPost(user);
                 } else {
-                    user.createPost(user,user.getMySubreddits().get(sub-1));
+                    char num = sub.charAt(0);
+                    user.createPost(user,user.getMySubreddits().get(num-49));
                 }
             } else if (choose == 4) {
+                System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
+
                 System.out.println("Enter the number of the subreddit you want to join: ");
                 for (int i = 0; i < Info.subreddits.size(); i++){
                     System.out.println((i+1) + ")" + Info.subreddits.get(i).getName());
                 }
                 Scanner input1 = new Scanner(System.in);
-                int sub = input1.nextInt();
-                Subreddit subreddit = Info.subreddits.get(sub - 1);
-                boolean joinSub = false;
-                boolean mySub = false;
-                for (int i = 0; i < user.subsData().size(); i++){
-                    if (Info.subreddits.get(sub - 1) == user.subsData().get(i)){
-                        joinSub = true;
-                        break;
-                    }
-                }
-                for (int i = 0; i < user.getMySubreddits().size(); i++){
-                    if (Info.subreddits.get(sub - 1) == user.getMySubreddits().get(i)){
-                        mySub = true;
-                        break;
-                    }
-                }
-                if (mySub) {
-                    System.out.println("You can't join to your subreddit:)\n");
-                } else if (joinSub) {
-                    System.out.println("You already join in this subreddit!\n");
+                String num = input1.next();
+                if (num.equals("BACK") || num.equals("back") || num.equals("Back")){
+
                 } else {
-                    user.joinSubreddit(subreddit);
+                    char sub = num.charAt(0);
+                    Subreddit subreddit = Info.subreddits.get(sub - 49);
+                    boolean joinSub = false;
+                    boolean mySub = false;
+                    for (int i = 0; i < user.subsData().size(); i++) {
+                        if (Info.subreddits.get(sub - 49) == user.subsData().get(i)) {
+                            joinSub = true;
+                            break;
+                        }
+                    }
+                    for (int i = 0; i < user.getMySubreddits().size(); i++) {
+                        if (Info.subreddits.get(sub - 49) == user.getMySubreddits().get(i)) {
+                            mySub = true;
+                            break;
+                        }
+                    }
+                    if (mySub) {
+                        System.out.println("You can't join to your subreddit:)\n");
+                    } else if (joinSub) {
+                        System.out.println("You already join in this subreddit!\n");
+                    } else {
+                        user.joinSubreddit(subreddit);
+                    }
                 }
             } else if (choose == 5) {
+                System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
                 user.createSubreddit(user);
             } else if (choose == 6) {
                 Info.profile(user);

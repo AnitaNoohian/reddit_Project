@@ -19,7 +19,7 @@ public class Account implements AccountManagement{
         karmaC = 0;
         karmaP = 0;
         this.name = name;
-        this.password = password;
+        this.password = hashPassword(password);
         this.email = email;
         postsList = new ArrayList<>();
         subreddits = new ArrayList<>();
@@ -48,10 +48,24 @@ public class Account implements AccountManagement{
         return ID;
     }
     public void setPassword(String password){
-        this.password = password;
+        this.password = hashPassword(password);
     }
-    public String getPassword(){
-        return password;
+    private String hashPassword(String password){
+        long mod = 1000000009, mabna = 203,
+                pow = 1, pass = 0;
+        for (int i = 0; i < password.length(); i++){
+            int save = password.charAt(i) - '0';
+            pass = (pass + (pow * save)) % mod;
+            pow = (pow * mabna) % mod;
+        }
+        return String.valueOf(pass);
+    }
+    public boolean checkPassword(String pass){
+        if (hashPassword(pass).equals(password)){
+            return true;
+        } else {
+            return false;
+        }
     }
     @Override
     public String getName() {
@@ -90,23 +104,23 @@ public class Account implements AccountManagement{
             return false;
         }
     }
-    public List<String> getSubreddit(){
-        List<String> subs = new ArrayList<>();
-        for (int i = 0; i < subreddits.size(); i++){
-            subs.add(subreddits.get(i).getName());
-        }
-        return subs;
-    }
+//    public List<String> getSubreddit(){
+//        List<String> subs = new ArrayList<>();
+//        for (int i = 0; i < subreddits.size(); i++){
+//            subs.add(subreddits.get(i).getName());
+//        }
+//        return subs;
+//    }
     public List<Subreddit> subsData(){
         return subreddits;
     }
-    public List<String> getMySubredditName(){
-        List<String> subs = new ArrayList<>();
-        for (int i = 0; i < mySubreddits.size(); i++){
-            subs.add(mySubreddits.get(i).getName());
-        }
-        return subs;
-    }
+//    public List<String> getMySubredditName(){
+//        List<String> subs = new ArrayList<>();
+//        for (int i = 0; i < mySubreddits.size(); i++){
+//            subs.add(mySubreddits.get(i).getName());
+//        }
+//        return subs;
+//    }
     public List<Subreddit> getMySubreddits(){
         return mySubreddits;
     }
@@ -150,9 +164,13 @@ public class Account implements AccountManagement{
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the name of your subreddit:");
         String name = input.nextLine();
-        Subreddit subreddit = new Subreddit(name,user);
-        mySubreddits.add(subreddit);
-        Info.subreddits.add(subreddit);
+        if (name.equals("BACK") || name.equals("back") || name.equals("Back")) {
+
+        } else {
+            Subreddit subreddit = new Subreddit(name, user);
+            mySubreddits.add(subreddit);
+            Info.subreddits.add(subreddit);
+        }
     }
     public void joinSubreddit(Subreddit subreddit){
         subreddits.add(subreddit);
