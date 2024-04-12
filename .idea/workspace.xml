@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a209e82-c1e9-48f4-841f-4ca8f83d6206" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/reddit_Project/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/reddit_Project/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/reddit_Project/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/reddit_Project/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/reddit_Project/Subreddit.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/reddit_Project/Subreddit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Subreddit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Subreddit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
