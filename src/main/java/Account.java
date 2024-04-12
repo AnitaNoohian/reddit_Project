@@ -104,32 +104,11 @@ public class Account implements Serializable {
             return false;
         }
     }
-//    public List<String> getSubreddit(){
-//        List<String> subs = new ArrayList<>();
-//        for (int i = 0; i < subreddits.size(); i++){
-//            subs.add(subreddits.get(i).getName());
-//        }
-//        return subs;
-//    }
     public List<Subreddit> subsData(){
         return subreddits;
     }
-//    public List<String> getMySubredditName(){
-//        List<String> subs = new ArrayList<>();
-//        for (int i = 0; i < mySubreddits.size(); i++){
-//            subs.add(mySubreddits.get(i).getName());
-//        }
-//        return subs;
-//    }
     public List<Subreddit> getMySubreddits(){
         return mySubreddits;
-    }
-    public List<String> getPosts(){
-        List<String> posts = new ArrayList<>();
-        for (int i = 0; i < postsList.size(); i++){
-            posts.add(postsList.get(i).getTitle());
-        }
-        return posts;
     }
     public List<Posts> postsData(){
         return postsList;
