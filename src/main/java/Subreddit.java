@@ -8,6 +8,7 @@ public class Subreddit implements Serializable {
     protected List<Account> admins;
     private List<Account> members;
     protected List<Posts> posts;
+    private UUID ID;
 
     public Subreddit(String name, Account host){
         numOfMembers = 1;
@@ -16,6 +17,7 @@ public class Subreddit implements Serializable {
         posts = new ArrayList<>();
         members = new ArrayList<>();
         admins = new ArrayList<>();
+        ID = UUID.randomUUID();
     }
 
     public String getName(){
