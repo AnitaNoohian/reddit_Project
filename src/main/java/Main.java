@@ -184,7 +184,7 @@ public class Main {
                 Scanner input1 = new Scanner(System.in);
                 System.out.println("Enter the phrase you want to search:");
                 String search = input1.nextLine();
-                Info.search(search);
+                Info.search(search,user);
             } else if (choose == 3) {
                 Scanner input1 = new Scanner(System.in);
                 System.out.println("\n[Enter \"BACK\" to go back to the first page]\n");
@@ -235,7 +235,7 @@ public class Main {
                     } else if (joinSub) {
                         System.out.println("You already join in this subreddit!\n");
                     } else {
-                        user.joinSubreddit(subreddit);
+                        user.joinSubreddit(subreddit,user);
                     }
                 }
             } else if (choose == 5) {

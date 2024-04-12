@@ -94,7 +94,8 @@ public class Info implements Serializable {
                         System.out.println("\nYou are not a member of Subreddit yet!");
                     } else {
                         for (int i = 0; i < user.subsData().size(); i++) {
-                            System.out.println(i + 1 + ")" + user.subsData().get(i).getName());
+                            System.out.println(i + 1 + ")" + user.subsData().get(i).getName() + "\n" +
+                                    user.subsData().get(i).getNumOfMembers() + " Members");
                         }
                         System.out.println("\n[if you want to open a subreddit enter the number or enter 0 to go back to the profile]");
                         Scanner input1 = new Scanner(System.in);
@@ -103,32 +104,63 @@ public class Info implements Serializable {
                             while (true) {
                                 Subreddit subreddit = user.subsData().get(sub - 1);
                                 System.out.println("\ns/" + subreddit.getName());
-                                System.out.println("\nPosts: ");
-                                for (int i = 0; i < subreddit.getPosts().size(); i++) {
-                                    System.out.println(i + 1 + ")" + "Posted by u/" + subreddit.getPosts().get(i).getUserName());
-                                    System.out.println("Title: " + subreddit.getPosts().get(i).getTitle());
-                                    System.out.println("***\n" + subreddit.getPosts().get(i).getText() + "\n***");
-                                    System.out.println("\nVotes: " + subreddit.getPosts().get(i).getVote());
+                                if (!subreddit.getPosts().isEmpty()) {
+                                    System.out.println("\nPosts: ");
+                                    for (int i = 0; i < subreddit.getPosts().size(); i++) {
+                                        System.out.println(i + 1 + ")" + "Posted by u/" + subreddit.getPosts().get(i).getUserName());
+                                        System.out.println("Title: " + subreddit.getPosts().get(i).getTitle());
+                                        System.out.println("***\n" + subreddit.getPosts().get(i).getText() + "\n***");
+                                        System.out.println("\nVotes: " + subreddit.getPosts().get(i).getVote());
+                                    }
                                 }
-                                System.out.println("\nEnter the number of the post you want to see(press 0 if you want to go back to the profile):");
+                                System.out.println("\nEnter the number to see the post - Post - Add new admins - Back");
                                 Scanner input2 = new Scanner(System.in);
-                                int num = input2.nextInt();
-                                if (num != 0) {
-                                    Posts post = subreddit.getPosts().get(num - 1);
-                                    postShow(post, post.getUser());
-                                } else {
+                                String num = input2.nextLine();
+                                if (num.equals("Post")) {
+                                    if (subreddit.checkAdmin(user)){
+                                        user.createPost(user,subreddit);
+                                    } else {
+                                        System.out.println("You are not allowed to post in this subreddit.\n");
+                                    }
+                                } else if (num.equals("Add new admins")) {
+                                    if (subreddit.checkAdmin(user)) {
+                                        if (subreddit.getMembers().isEmpty()) {
+                                            System.out.println("There is no member in this subreddit!\n");
+                                        } else {
+                                            System.out.println("Choose the number of a member(press 0 to go back):");
+                                            for (int i = 0; i < subreddit.getMembers().size(); i++) {
+                                                System.out.println(i + 1 + ") u/" + subreddit.getMembers().get(i).getID());
+                                            }
+                                            Scanner input4 = new Scanner(System.in);
+                                            int mem = input4.nextInt();
+                                            if (mem != 0) {
+                                                Account member = subreddit.getMembers().get(mem - 1);
+                                                subreddit.setAdmins(member);
+                                            }
+                                        }
+                                    } else {
+                                        System.out.println("You are not allowed to post in this subreddit.\n");
+                                    }
+                                } else if (num.equals("Back")){
                                     break;
+                                } else if (num.isEmpty()) {
+
+                                } else {
+                                    char p = num.charAt(0);
+                                    Posts post = subreddit.getPosts().get(p-49);
+                                    postShow(post, user);
                                 }
                             }
                         }
                     }
                     break;
                 case "Subreddits you create":
-                    if (user.subsData().isEmpty()){
+                    if (user.getMySubreddits().isEmpty()){
                         System.out.println("\nYou have not created a subreddit yet!");
                     } else {
                         for (int i = 0; i < user.getMySubreddits().size(); i++) {
-                            System.out.println(i + 1 + ")" + user.getMySubreddits().get(i).getName());
+                            System.out.println(i + 1 + ")" + user.getMySubreddits().get(i).getName() + "\n" +
+                                    user.getMySubreddits().get(i).getNumOfMembers() + " Members");
                         }
                         System.out.println("\n[if you want to open a subreddit enter the number or enter 0 to go back to the profile]");
                         Scanner input2 = new Scanner(System.in);
@@ -137,21 +169,43 @@ public class Info implements Serializable {
                             while (true) {
                                 Subreddit subreddit = user.getMySubreddits().get(sub1 - 1);
                                 System.out.println("s/" + subreddit.getName() + "\n");
-                                System.out.println("\nPosts: ");
-                                for (int i = 0; i < subreddit.getPosts().size(); i++) {
-                                    System.out.println(i + 1 + ")" + "Posted by u/" + subreddit.getPosts().get(i).getUserName());
-                                    System.out.println("Title: " + subreddit.getPosts().get(i).getTitle());
-                                    System.out.println("***\n" + subreddit.getPosts().get(i).getText() + "\n***");
-                                    System.out.println("Votes: " + subreddit.getPosts().get(i).getVote());
+                                if (!subreddit.getPosts().isEmpty()) {
+                                    System.out.println("\nPosts: ");
+                                    for (int i = 0; i < subreddit.getPosts().size(); i++) {
+                                        System.out.println(i + 1 + ")" + "Posted by u/" + subreddit.getPosts().get(i).getUserName());
+                                        System.out.println("Title: " + subreddit.getPosts().get(i).getTitle());
+                                        System.out.println("***\n" + subreddit.getPosts().get(i).getText() + "\n***");
+                                        System.out.println("Votes: " + subreddit.getPosts().get(i).getVote());
+                                    }
                                 }
-                                System.out.println("Enter the number of the post you want to see(press 0 if you want to go back to the profile):");
+                                System.out.println("\nEnter the number to see the post - Post - Add new admins - Back");
                                 Scanner input3 = new Scanner(System.in);
-                                int num = input3.nextInt();
-                                if (num != 0) {
-                                    Posts post = subreddit.getPosts().get(num - 1);
-                                    postShow(post, post.getUser());
-                                } else {
+                                String num = input3.nextLine();
+                                if (num.equals("Post")) {
+                                    user.createPost(user,subreddit);
+                                } else if (num.equals("Add new admins")) {
+                                    if (subreddit.getMembers().isEmpty()){
+                                        System.out.println("There is no member in this subreddit!\n");
+                                    } else {
+                                        System.out.println("Choose the number of a member(press 0 to go back):");
+                                        for (int i = 0; i < subreddit.getMembers().size(); i++) {
+                                            System.out.println(i+1 + ") u/" + subreddit.getMembers().get(i).getID());
+                                        }
+                                        Scanner input4 = new Scanner(System.in);
+                                        int mem = input4.nextInt();
+                                        if (mem != 0){
+                                            Account member = subreddit.getMembers().get(mem-1);
+                                            subreddit.setAdmins(member);
+                                        }
+                                    }
+                                } else if (num.equals("Back")) {
                                     break;
+                                } else if (num.isEmpty()) {
+
+                                } else {
+                                    char p = num.charAt(0);
+                                    Posts post = subreddit.getPosts().get(p-49);
+                                    postShow(post, user);
                                 }
                             }
                         }
@@ -424,7 +478,7 @@ public class Info implements Serializable {
         }
         return subFind;
     }
-    public static void search(String search){
+    public static void search(String search, Account user1){
         List<Account> matchUser = searchUser(search);
         List<Subreddit> matchSub = searchSub(search);
         System.out.println("\nUsers:");
@@ -440,7 +494,8 @@ public class Info implements Serializable {
             System.out.println("Nothing found!\n");
         } else {
             for (int i = matchUser.size(); i < matchUser.size() + matchSub.size(); i++) {
-                System.out.println((i + 1) + ") s/" + matchSub.get(i - matchUser.size()).getName() + "\n" + matchSub.get(i - matchUser.size()).getNumOfMembers() + " Members\n");
+                System.out.println((i + 1) + ") s/" + matchSub.get(i - matchUser.size()).getName() + "\n"
+                        + matchSub.get(i - matchUser.size()).getNumOfMembers() + " Members\n");
             }
         }
         Scanner input = new Scanner(System.in);
@@ -449,102 +504,113 @@ public class Info implements Serializable {
         if (choose == 0) {
 
         } else if (choose > 0 && choose <= matchUser.size()) {
-            Account user = matchUser.get(choose - 1);
-            System.out.println(user.getName());
-            System.out.println("u/" + user.getID());
-            System.out.println("\nPosts: ");
-            if (user.postsData().isEmpty()) {
-                System.out.println("This user has not posted yet!\n");
-            } else {
-                for (int i = 0; i < user.postsData().size(); i++) {
-                    if (user.postsData().get(i).getSubreddit() != null) {
-                        System.out.println((i+1) +")" + "s/" + user.postsData().get(i).getSubreddit().getName());
-                    }
-                    System.out.println("Title : " + user.postsData().get(i).getTitle());
-                    System.out.println("***\n" + user.postsData().get(i).getText() + "\n***");
-                }
-            }
-            System.out.println("\nComments: ");
-            if (user.getComments().isEmpty()){
-                System.out.println("This user has not commented yet!\n");
-            } else {
-                for (int i = 0; i < user.getComments().size(); i++) {
-                    Comment comment = user.getComments().get(i);
-                    System.out.println((i+1) + ")" + "s/" + comment.getPost().getSubreddit() + "  \'" + comment.getPost().getTitle() + "\'");
-                    System.out.println(comment.getDetail());
-                }
-            }
-            System.out.println("[Press 'P' for posts OR press 'C' for comments OR press '0' to go back]");
-            Scanner input1 = new Scanner(System.in);
-            char mov = input1.next().charAt(0);
-            if (mov == 'P') {
-                System.out.println("Enter the number of the post you want to see:");
-                Scanner input2 = new Scanner(System.in);
-                int num = input2.nextInt();
-                Posts post = user.postsData().get(num-1);
-                postShow(post,user);
-            } else if (mov == 'C') {
-                System.out.println("Enter the number of the comment you want to see:");
-                Scanner input2 = new Scanner(System.in);
-                int num = input2.nextInt();
-                Comment comment = user.getComments().get(num-1);
-                System.out.println("s/" + comment.getPost().getSubreddit() + "  \'" + comment.getPost().getTitle() + "\'");
-                System.out.println(comment.getDetail());
-                System.out.println("0.back\t1.UpVote\t2.DownVote");
-                int vote = input2.nextInt();
-                boolean check = false;
-                UUID savekey = null;
-                boolean preVote = false;
-                for (UUID key : user.votes.keySet()){
-                    if (comment.getID() == key){
-                        check = true;
-                        savekey = key;
-                        preVote = user.votes.get(key);
-                    }
-                }
-                if (check) {
-                    System.out.println("You vote this comment before!");
-                    System.out.println("Do you want to remove your vote?\n1.Yes\t2.No");
-                    Scanner input4 = new Scanner(System.in);
-                    int remove = input4.nextInt();
-                    if (remove == 1) {
-                        user.votes.remove(savekey);
-                        if (preVote) {
-                            comment.downVote();
-                            comment.getUser().minusKarma("C");
-                        } else {
-                            comment.upVote();
-                            comment.getUser().plusKarma("C");
+            while (true) {
+                Account user = matchUser.get(choose - 1);
+                System.out.println(user.getName());
+                System.out.println("u/" + user.getID());
+                System.out.println("\nPosts: ");
+                if (user.postsData().isEmpty()) {
+                    System.out.println("This user has not posted yet!\n");
+                } else {
+                    for (int i = 0; i < user.postsData().size(); i++) {
+                        if (user.postsData().get(i).getSubreddit() != null) {
+                            System.out.println((i + 1) + ")" + "s/" + user.postsData().get(i).getSubreddit().getName());
                         }
-                    } else if (remove == 2) {
+                        System.out.println("Title : " + user.postsData().get(i).getTitle());
+                        System.out.println("***\n" + user.postsData().get(i).getText() + "\n***");
+                    }
+                }
+                System.out.println("\nComments: ");
+                if (user.getComments().isEmpty()) {
+                    System.out.println("This user has not commented yet!\n");
+                } else {
+                    for (int i = 0; i < user.getComments().size(); i++) {
+                        Comment comment = user.getComments().get(i);
+                        System.out.println((i + 1) + ")" + "s/" + comment.getPost().getSubreddit() + "  \'" + comment.getPost().getTitle() + "\'");
+                        System.out.println(comment.getDetail());
+                    }
+                }
+                System.out.println("[Press 'P' for posts OR press 'C' for comments OR press '0' to go back]");
+                Scanner input1 = new Scanner(System.in);
+                char mov = input1.next().charAt(0);
+                if (mov == 'P') {
+                    System.out.println("Enter the number of the post you want to see:");
+                    Scanner input2 = new Scanner(System.in);
+                    int num = input2.nextInt();
+                    Posts post = user.postsData().get(num - 1);
+                    postShow(post, user1);
+                } else if (mov == 'C') {
+                    System.out.println("Enter the number of the comment you want to see:");
+                    Scanner input2 = new Scanner(System.in);
+                    int num = input2.nextInt();
+                    Comment comment = user.getComments().get(num - 1);
+                    System.out.println("s/" + comment.getPost().getSubreddit() + "  \'" + comment.getPost().getTitle() + "\'");
+                    System.out.println(comment.getDetail());
+                    System.out.println("0.back\t1.UpVote\t2.DownVote");
+                    int vote = input2.nextInt();
+                    boolean check = false;
+                    UUID savekey = null;
+                    boolean preVote = false;
+                    for (UUID key : user.votes.keySet()) {
+                        if (comment.getID() == key) {
+                            check = true;
+                            savekey = key;
+                            preVote = user.votes.get(key);
+                        }
+                    }
+                    if (check) {
+                        System.out.println("You vote this comment before!");
+                        System.out.println("Do you want to remove your vote?\n1.Yes\t2.No");
+                        Scanner input4 = new Scanner(System.in);
+                        int remove = input4.nextInt();
+                        if (remove == 1) {
+                            user.votes.remove(savekey);
+                            if (preVote) {
+                                comment.downVote();
+                                comment.getUser().minusKarma("C");
+                            } else {
+                                comment.upVote();
+                                comment.getUser().plusKarma("C");
+                            }
+                        } else if (remove == 2) {
+                        }
+                    } else {
+                        if (vote == 1) {
+                            user.upVoteComment(comment);
+                        } else if (vote == 2) {
+                            user.downVoteComment(comment);
+                        }
                     }
                 } else {
-                    if (vote == 1) {
-                        user.upVoteComment(comment);
-                    } else if (vote == 2) {
-                        user.downVoteComment(comment);
-                    }
+                    break;
                 }
-            } else {
-
             }
         } else {
-            Subreddit sub = matchSub.get(choose - matchUser.size() - 1);
-            System.out.println("s/" + sub.getName() + "\n");
-            System.out.println("\nPosts: ");
-            for (int i = 0; i < sub.getPosts().size(); i++){
-                System.out.println((i+1) + ")" + "Posted by u/" + sub.getPosts().get(i).getUserName());
-                System.out.println("Title : " + sub.getPosts().get(i).getTitle());
-                System.out.println("***\n" + sub.getPosts().get(i).getText() + "\n***");
-            }
-            System.out.println("Enter the number of the post you want to see(press 0 if you want to go back to the menu):");
-            Scanner input2 = new Scanner(System.in);
-            int num = input2.nextInt();
-            if (num == 0){
-
-            } else {
-                Posts post = sub.getPosts().get(num - 1);
-                postShow(post, post.getUser());
+            while (true) {
+                Subreddit sub = matchSub.get(choose - matchUser.size() - 1);
+                System.out.println("s/" + sub.getName() + "\n");
+                System.out.println("\nPosts: ");
+                for (int i = 0; i < sub.getPosts().size(); i++) {
+                    System.out.println((i + 1) + ")" + "Posted by u/" + sub.getPosts().get(i).getUserName());
+                    System.out.println("Title : " + sub.getPosts().get(i).getTitle());
+                    System.out.println("***\n" + sub.getPosts().get(i).getText() + "\n***");
+                }
+                System.out.println("Enter the number to see the post - Post - Back");
+                Scanner input2 = new Scanner(System.in);
+                String num = input2.next();
+                if (num.equals("Post")) {
+                    if (sub.checkAdmin(user1)) {
+                        user1.createPost(user1, sub);
+                    } else {
+                        System.out.println("You are not allowed to post in this subreddit.\n");
+                    }
+                } else if (num.equals("Back")) {
+                    break;
+                } else {
+                    char p = num.charAt(0);
+                    Posts post = sub.getPosts().get(p - 49);
+                    postShow(post, user1);
+                }
             }
         }
     }

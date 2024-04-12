@@ -172,9 +172,9 @@ public class Account implements AccountManagement{
             Info.subreddits.add(subreddit);
         }
     }
-    public void joinSubreddit(Subreddit subreddit){
+    public void joinSubreddit(Subreddit subreddit, Account user){
         subreddits.add(subreddit);
-        subreddit.addMembers();
+        subreddit.addMembers(user);
     }
     public void addComment(Posts post, Account user){
         Scanner input = new Scanner(System.in);
