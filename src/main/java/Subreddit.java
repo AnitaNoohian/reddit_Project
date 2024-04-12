@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Subreddit {
+public class Subreddit implements Serializable {
     private int numOfMembers;
     private String name;
     private Account host;
@@ -63,6 +64,7 @@ public class Subreddit {
                 while (true) {
                     if (remove == 1) {
                         admins.remove(i);
+                        break;
                     } else if (remove == 2) {
                         break;
                     } else {

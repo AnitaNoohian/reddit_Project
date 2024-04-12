@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Account implements AccountManagement{
+public class Account implements Serializable {
     private int karmaP;
     private int karmaC;
     private String email;
@@ -67,7 +68,6 @@ public class Account implements AccountManagement{
             return false;
         }
     }
-    @Override
     public String getName() {
         return name;
     }

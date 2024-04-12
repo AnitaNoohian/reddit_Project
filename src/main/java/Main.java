@@ -1,14 +1,50 @@
 import java.util.List;
 import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         enterWeb();
 
     }
-    public static void enterWeb() {
+    public static void saveFile() throws Exception{
+        ObjectOutputStream outUser = new ObjectOutputStream(new FileOutputStream("Account.txt"));
+        outUser.writeObject(Info.users);
+        outUser.close();
+        ObjectOutputStream outSub = new ObjectOutputStream(new FileOutputStream("Subreddit.txt"));
+        outSub.writeObject(Info.subreddits);
+        outSub.close();
+        ObjectOutputStream outPost = new ObjectOutputStream(new FileOutputStream("Post.txt"));
+        outPost.writeObject(Info.posts);
+        outPost.close();
+    }
+    public static void readFile() throws Exception{
+        String fileName1 = "Account.txt";
+        File file1 = new File(fileName1);
+        if (file1.exists()) {
+            ObjectInputStream inUser = new ObjectInputStream(new FileInputStream("Account.txt"));
+            Info.users = (List<Account>) inUser.readObject();
+            inUser.close();
+        }
+        String fileName2 = "Subreddit.txt";
+        File file2 = new File(fileName2);
+        if (file2.exists()) {
+            ObjectInputStream inSub = new ObjectInputStream(new FileInputStream("Subreddit.txt"));
+            Info.subreddits = (List<Subreddit>) inSub.readObject();
+            inSub.close();
+        }
+        String fileName3 = "Post.txt";
+        File file3 = new File(fileName3);
+        if (file3.exists()) {
+            ObjectInputStream inPost = new ObjectInputStream(new FileInputStream("Post.txt"));
+            Info.posts = (List<Posts>) inPost.readObject();
+            inPost.close();
+        }
+    }
+    public static void enterWeb() throws Exception{
         Scanner input = new Scanner(System.in);
         System.out.println("\n\t\t\tHello Dear**\n\t\t  welcome to Reddit.\n");
+        readFile();
         while (true) {
             System.out.println("Do you have an account?\n1.yes(log in)\t2.No(sign up)\t3.Exit\n");
             int enter = input.nextInt();
@@ -144,6 +180,7 @@ public class Main {
                     }
                 }
             } else if (enter == 3){
+                saveFile();
                 break;
             } else {
                 System.out.println("You entered a wrong number!\n");

@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Comment {
+public class Comment implements Serializable {
     private Posts post;
     private Account user;
     private String detail;
@@ -35,7 +36,7 @@ public class Comment {
         return post;
     }
     public void show(){
-        System.out.println(user.getID());
+        System.out.println("u/" + user.getID());
         System.out.println(detail);
         System.out.println("Votes: " + vote);
     }

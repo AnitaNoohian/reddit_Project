@@ -139,7 +139,7 @@ public class Info implements Serializable {
                                             }
                                         }
                                     } else {
-                                        System.out.println("You are not allowed to post in this subreddit.\n");
+                                        System.out.println("You are not allowed to add admins in this subreddit.\n");
                                     }
                                 } else if (num.equals("Back")){
                                     break;

@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class Posts implements PostManagement{
+public class Posts implements Serializable {
     private int vote;
     private String title;
     private String text;
